@@ -60,14 +60,14 @@ const SimpleForm = () => {
                         <Form.Label>Comment</Form.Label>
                         <Form.Control placeholder="Write your comments here..." name="comment" value={comment} onChange={handleChange} as="textarea" rows={3} />
                     </Form.Group>
-                    {/* <Form.Group controlId="formSelect">
-                        <Form.Select name="gender" onChange={handleChange}>
+                    <Form.Group className="m-2" controlId="formSelect">
+                        <Form.Control as="select" name="gender" onChange={handleChange}>
                             <option>Select Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Others</option>
-                        </Form.Select>
-                    </Form.Group> */}
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="others">Others</option>
+                        </Form.Control>
+                    </Form.Group>
                     <Form.Group controlId="form.File" className="m-3">
                         <Form.Label>(Select Profile Picture)</Form.Label><br/>
                         <Form.Control name="imageFile" ref={imageRef} type="file" />
