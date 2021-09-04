@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuid } from 'uuid';
+import ModernDatepicker from 'react-modern-datepicker';
 import FormCard from './FormCard';
 
 const initialState = {
@@ -8,12 +9,14 @@ const initialState = {
     email: "",
     comment: "",
     agreement: false,
-    gender: ""
+    gender: "",
+    birthday: null
 }
 
 const SimpleForm = () => {
     const [state, setState] = useState(initialState);
     const [data, setData] = useState([]);
+
     let imageRef = useRef();
     let inputRef = useRef();
 
@@ -21,6 +24,12 @@ const SimpleForm = () => {
         inputRef.current.focus();
     },[])
 
+    const handleBirthday = (date) => {
+        setState({
+            ...state,
+            birthday: date
+        })
+    }
     const handleChange = (e) => {
         let { name, value, type, checked } = e.currentTarget;
         const val = type === "checkbox" ? checked : value;
@@ -39,11 +48,11 @@ const SimpleForm = () => {
         setData([...data, payload]);
         console.log(data);
     }
-    const { name, email, comment, agreement } = state;
+    const { name, email, comment, agreement, birthday } = state;
     return (
         <>
-            <div className="container w-90 p-2 m-1 mx-auto">
-                {/* <h1 className="text-danger text-center">Bootstrap Forms</h1> */}
+            <div className="container w-50 p-2 m-1 mx-auto">
+                <h1 className="text-danger text-center">Bootstrap Forms</h1>
                 <form className="form">
                     <div className="form-group">
                         <label className="form-label">Name</label>
@@ -66,6 +75,16 @@ const SimpleForm = () => {
                             <option value="others">Others</option>
                         </select>
                     </div>
+                    <div>
+                        <label>Date of Birth</label>
+                        <ModernDatepicker
+                            onChange={date => handleBirthday(date)}
+                            placeholder='Select a date'
+                            showBorder
+                            format={'DD/MM/YYYY'}
+                            date={birthday}
+                        />
+                    </div>
                     <div className="form-group m-3">
                         <label className="form-label">(Select Profile Picture)</label><br/>
                         <input className="form-control" name="imageFile" ref={imageRef} type="file" />
@@ -79,7 +98,7 @@ const SimpleForm = () => {
                     </div>
                 </form>
             </div>
-            <div className="container w-25 h-25 m-2">
+            <div className="container w-100 h-25 m-2 p-1 row">
                 {data?.map((item) => <FormCard key={item.id} {...item} />)}
             </div>
         </>
